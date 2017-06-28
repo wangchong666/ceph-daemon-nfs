@@ -16,12 +16,12 @@ EXPORT
 {
 		# Export Id (mandatory, each EXPORT must have a unique Export_Id)
 		Export_Id = 77;
-		
+
 		# Exported path (mandatory)
 		Path = ${GANESHA_EXPORT};
 
 		# Pseudo Path (for NFS v4)
-		Pseudo = ${GANESHA_EXPORT}_nfs4;
+		Pseudo = ${GANESHA_EXPORT};
 
 		Access_Type = RW;
 		Squash = No_Root_Squash;
@@ -63,9 +63,16 @@ function init_dbus {
 	sleep 1
 }
 
+function apply_permissions {
+	if [ -f "${PERMISSIONS_FILE}" ]; then
+  	/bin/sh ${PERMISSIONS_FILE}
+	fi
+}
+
 bootstrap_config
 init_rpc
 init_dbus
+apply_permissions
 
 echo "Starting Ganesha NFS"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib

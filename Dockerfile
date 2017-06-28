@@ -7,12 +7,12 @@ RUN DEBIAN_FRONTEND=noninteractive \
  && echo "deb http://ppa.launchpad.net/gluster/nfs-ganesha/ubuntu xenial main" > /etc/apt/sources.list.d/nfs-ganesha.list \
  && echo "deb http://ppa.launchpad.net/gluster/libntirpc/ubuntu xenial main" > /etc/apt/sources.list.d/libntirpc.list \
  && apt-get update \
- && apt-get install -y wget unzip uuid-runtime python-setuptools udev runit sharutils nfs-common dbus nfs-ganesha nfs-ganesha-fsal \
+ && apt-get install -y netbase nfs-common dbus nfs-ganesha nfs-ganesha-fsal \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && mkdir -p /run/rpcbind /export /var/run/dbus \
  && touch /run/rpcbind/rpcbind.xdr /run/rpcbind/portmap.xdr \
- && chmod 777 /run/rpcbind/* \
+ && chmod 755 /run/rpcbind/* \
  && chown messagebus:messagebus /var/run/dbus
 
 # Add startup script and ganesha config
