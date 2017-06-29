@@ -7,11 +7,14 @@ set -e
 : ${GANESHA_OPTIONS:="-N NIV_EVENT"} # NIV_DEBUG
 : ${GANESHA_EPOCH:=""}
 : ${GANESHA_EXPORT:="/export"}
+: ${GANESHA_ACCESS:="*"}
+: ${GANESHA_ROOT_ACCESS:="*"}
+: ${GANESHA_NFS_PROTOCOLS:="3,4"}
+: ${GANESHA_TRANSPORTS:="UDP,TCP"}
 
 function bootstrap_config {
-	if [ ! -f "${GANESHA_CONFIGFILE}" ]; then
-		echo "Bootstrapping Ganesha NFS config"
-    cat <<END >${GANESHA_CONFIGFILE}
+	echo "Bootstrapping Ganesha NFS config"
+  cat <<END >${GANESHA_CONFIGFILE}
 
 EXPORT
 {
@@ -22,13 +25,17 @@ EXPORT
 		Path = ${GANESHA_EXPORT};
 
 		# Pseudo Path (for NFS v4)
-		Pseudo = ${GANESHA_EXPORT};
+		Pseudo = /;
 
+		# Access control options
 		Access_Type = RW;
 		Squash = No_Root_Squash;
+		Root_Access = "${GANESHA_ROOT_ACCESS}";
+    Access = "${GANESHA_ACCESS}";
 
-		#Transports = TCP;
-		#Protocols = NFS4;
+		# NFS protocol options
+		Transports = "${GANESHA_TRANSPORTS}";
+		Protocols = "${GANESHA_NFS_PROTOCOLS}";
 
 		SecType = "sys";
 
@@ -39,7 +46,6 @@ EXPORT
 }
 
 END
-	fi
 }
 
 function bootstrap_export {
@@ -65,15 +71,15 @@ function init_dbus {
 	sleep 1
 }
 
-function apply_permissions {
-	if [ -f "${PERMISSIONS_FILE}" ]; then
-  	/bin/sh ${PERMISSIONS_FILE}
+function startup_script {
+	if [ -f "${STARTUP_SCRIPT}" ]; then
+  	/bin/sh ${STARTUP_SCRIPT}
 	fi
 }
 
 bootstrap_config
 bootstrap_export
-apply_permissions
+startup_script
 
 init_rpc
 init_dbus
