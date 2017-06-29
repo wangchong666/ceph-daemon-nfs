@@ -16,9 +16,8 @@ RUN DEBIAN_FRONTEND=noninteractive \
  && chmod 755 /run/rpcbind/* \
  && chown messagebus:messagebus /var/run/dbus
 
-# Add startup script and ganesha config
+# Add startup script
 ADD start.sh /
-ADD ganesha.conf /etc/ganesha/ganesha.conf
 
 # NFS ports and portmapper
 EXPOSE 2049 38465-38467 662 111/udp 111

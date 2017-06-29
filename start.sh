@@ -9,7 +9,8 @@ set -e
 : ${GANESHA_EXPORT:="/export"}
 
 function bootstrap_config {
-	echo "Bootstrapping Ganesha NFS config"
+	if [ ! -f "${GANESHA_CONFIGFILE}" ]; then
+		echo "Bootstrapping Ganesha NFS config"
     cat <<END >${GANESHA_CONFIGFILE}
 
 EXPORT
@@ -38,12 +39,13 @@ EXPORT
 }
 
 END
+	fi
 }
 
 function bootstrap_export {
 	if [ ! -f ${GANESHA_EXPORT} ]; then
 		mkdir -p "${GANESHA_EXPORT}"
-    fi
+  fi
 }
 
 function init_rpc {
@@ -70,9 +72,12 @@ function apply_permissions {
 }
 
 bootstrap_config
+bootstrap_export
+apply_permissions
+
 init_rpc
 init_dbus
-apply_permissions
+
 
 echo "Starting Ganesha NFS"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib
