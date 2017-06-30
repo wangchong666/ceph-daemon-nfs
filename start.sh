@@ -6,6 +6,7 @@ set -e
 : ${GANESHA_CONFIGFILE:="/etc/ganesha/ganesha.conf"}
 : ${GANESHA_OPTIONS:="-N NIV_EVENT"} # NIV_DEBUG
 : ${GANESHA_EPOCH:=""}
+: ${GANESHA_EXPORT_ID:="77"}
 : ${GANESHA_EXPORT:="/export"}
 : ${GANESHA_ACCESS:="*"}
 : ${GANESHA_ROOT_ACCESS:="*"}
@@ -19,7 +20,7 @@ function bootstrap_config {
 EXPORT
 {
 		# Export Id (mandatory, each EXPORT must have a unique Export_Id)
-		Export_Id = 77;
+		Export_Id = ${GANESHA_EXPORT_ID};
 
 		# Exported path (mandatory)
 		Path = ${GANESHA_EXPORT};
