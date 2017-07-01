@@ -1,7 +1,7 @@
 # NFS Ganesha
-nfs-ganesha - a user mode nfs server implemented in a container. Supports serving NFS (v3, 4.0, 4.1, 4.1 pNFS, 4.2) and 9P. This container should also be configurable with all of the nfs-ganesha supported FSAL backends.
+A user mode nfs server implemented in a container. Supports serving NFS (v3, 4.0, 4.1, 4.1 pNFS, 4.2) and 9P. This container should also be configurable with all of the nfs-ganesha supported FSAL backends.
 
-Currently generates a config for just serving a local path over nfs. However supplying `GANESHA_CONFIGFILE` would allow ganesha to be pointed to a bind mounted config file.
+Currently generates a config for just serving a local path over nfs. However supplying `GANESHA_CONFIGFILE` would allow ganesha to be pointed to a bind mounted config file for other FASLs/more advanced configuration.
 
 ### Versions
 * ganesha: 3.5
@@ -37,7 +37,7 @@ EXPORT
 		Access_Type = RW;
 		Squash = No_Root_Squash;
 		Root_Access = "${GANESHA_ROOT_ACCESS}";
-    Access = "${GANESHA_ACCESS}";
+		Access = "${GANESHA_ACCESS}";
 
 		# NFS protocol options
 		Transports = "${GANESHA_TRANSPORTS}";
