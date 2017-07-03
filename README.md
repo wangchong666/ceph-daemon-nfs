@@ -4,7 +4,7 @@ A user mode nfs server implemented in a container. Supports serving NFS (v3, 4.0
 Currently generates a config for just serving a local path over nfs. However supplying `GANESHA_CONFIGFILE` would allow ganesha to be pointed to a bind mounted config file for other FASLs/more advanced configuration.
 
 ### Versions
-* ganesha: 3.5
+* ganesha: 2.4
 * glusterfs-common: 3.11
 
 ### Environment Variables
