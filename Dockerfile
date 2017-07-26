@@ -17,7 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
  && chown messagebus:messagebus /var/run/dbus
 
 # Add startup script
-ADD start.sh /
+COPY start.sh /
 
 # NFS ports and portmapper
 EXPOSE 2049 38465-38467 662 111/udp 111
