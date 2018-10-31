@@ -42,7 +42,7 @@ EXPORT
 
 		# Exporting FSAL
 		FSAL {
-			Name = VFS;
+			Name = CEPH;
 		}
 }
 
