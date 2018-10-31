@@ -7,3 +7,4 @@ RUN mkdir -p /run/rpcbind /export /var/run/dbus \
  && chown messagebus:messagebus /var/run/dbus
 
 COPY start_mon.sh /start_mon.sh
+
